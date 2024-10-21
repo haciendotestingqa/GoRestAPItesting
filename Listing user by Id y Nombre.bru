@@ -1,0 +1,28 @@
+meta {
+  name: Listing user by Id y Nombre
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_api_url}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token_GoRestAPI}}
+}
+
+tests {
+  test("El Id y el Nombre fueron listados exitosamente", function(){
+      expect(res.body).to.be.a('array');
+  
+      res.body.forEach(function(item){
+          test("El Id y el Nombre son: " + item.id + " " + item.name, function(){
+              expect(item.id).to.be.a('number');
+              expect(item.name).to.be.a('string');
+          });
+      });
+  });
+}

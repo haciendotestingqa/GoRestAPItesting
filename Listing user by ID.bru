@@ -1,0 +1,21 @@
+meta {
+  name: Listing user by ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_api_url}}/{{post_id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token_GoRestAPI}}
+}
+
+tests {
+  test("Test 3: Listing user status is 200", function(){
+      expect(res.getStatus()).to.equal(200);
+  })
+}

@@ -1,0 +1,53 @@
+meta {
+  name: Adding a user
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_api_url}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token_GoRestAPI}}
+}
+
+body:json {
+  {{post_body}}
+}
+
+script:pre-request {
+  let body = {
+      "name": "Veronica",
+      "gender": "female",
+      "email": "haciendotestingqa@gmail.com",
+      "status": "active"
+  };
+  
+  bru.setVar('post_body', JSON.stringify(body))
+  
+}
+
+tests {
+  let response = res.getBody();
+  let postId = response.id;
+  let response2 = res.getBody();
+  let postName = response2.name;
+  
+  bru.setVar("post_id", postId);
+  bru.setVar("post_name", postName);
+  
+  test('HTTP status is 201 Created for successful post request', function(){
+      expect(res.getStatus()).to.equal(201);
+  })
+  
+  test('HTTP response body has Name', function(){
+      expect(response.name).to.eql("Veronica");
+  })
+  
+  test("Test 2: Adding user status is 201", function(){
+      expect(res.getStatus()).to.equal(201);
+  })
+}

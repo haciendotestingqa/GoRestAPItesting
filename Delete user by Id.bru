@@ -1,0 +1,21 @@
+meta {
+  name: Delete user by Id
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{base_api_url}}/{{post_id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token_GoRestAPI}}
+}
+
+tests {
+  test("Test 4: Deleting user status is 204", function(){
+      expect(res.getStatus()).to.equal(204);
+  })
+}
